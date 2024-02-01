@@ -11,15 +11,15 @@ void cipher_text_1(string text, int k1, int *k2, int l);
 
 int main(void)
 {
-    // Ask for text to encript
-    string plain_text = get_string("Insert text to encript:  ");
+    // Ask for text to encrypt
+    string plain_text = get_string("Insert text to encrypt:  ");
     // First key generation
     int key1 = generate_key1(plain_text);
-    // How many diferent characters are
+    // How many different characters are
     int len = type_char_count(plain_text);
     // Second key generation
     int *key2 = generate_key2(plain_text, key1, len);
-    // Encripting text
+    // Encrypting text
     cipher_text_1(plain_text, key1, key2, len);
 
     free(key2);
@@ -30,7 +30,7 @@ int main(void)
 
 int generate_key1(string text)
 {
-    // Create a three digits key with the ascii values of the first three characters
+    // Create a three-digit key with the ASCII values of the first three characters
     int n;
     n = ((text[0]) % 10) * 100 + ((text[1]) % 10) * 10 + (text[2]) % 10;
     return n;
@@ -38,7 +38,7 @@ int generate_key1(string text)
 
 int *generate_key2(string text, int key, int len)
 {
-    // Use the first key to generate a key-string with the lenght of the amount of different characters
+    // Use the first key to generate a key-string with the length of the amount of different characters
     int *array = (int *) malloc(len * sizeof(int));
     if (array == NULL)
     {
@@ -66,7 +66,7 @@ int *generate_key2(string text, int key, int len)
 
 int type_char_count(string text)
 {
-    // Calculate how many differents characters are
+    // Calculate how many different characters are
     int characters[256] = {0};
     int count = 0;
     for (int j = 0; text[j] != '\0'; j++)
@@ -82,7 +82,7 @@ int type_char_count(string text)
 
 void cipher_text_1(string text, int k1, int *k2, int l)
 {
-    // Encripting the text adding the values of the second key to the ascii values of the text
+    // Encrypting the text adding the values of the second key to the ASCII values of the text
     int l2 = strlen(text);
     int *ciphered_text = (int *) malloc(l2 * sizeof(int));
     if (ciphered_text == NULL)
@@ -97,13 +97,15 @@ void cipher_text_1(string text, int k1, int *k2, int l)
             ciphered_text[k] = k2[k % l] + text[k];
         }
     }
-    // Returning the original text encripted (also changing the decimal values to hexadecimal)
-    printf("Ciphered_tex: ");
+    // Returning the original text encrypted (also changing the decimal values to hexadecimal)
+    printf("Ciphered_text: ");
+
     for (int i = 0; text[i] != '\0'; i++)
     {
-        printf("%x", ciphered_text[i]);
-        // Adding the first key and len information to help the desencription program
-        printf("%x %x", k1, l);
+        printf("%x %x %x ", (ciphered_text[i]) * 2, k1 - (2 * i), l + i);
+        // Adding the first key and len information to help the decryption program
     }
+
     free(ciphered_text);
 }
+
