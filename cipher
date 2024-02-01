@@ -94,7 +94,7 @@ void cipher_text_1(string text, int k1, int *k2, int l)
     {
         for (int k = i; k < l2; k += l)
         {
-            ciphered_text[k] = k2[k % l] + text[k];
+            ciphered_text[k] = k2[k % l] + (text[k] + 1) * 3;
         }
     }
     // Returning the original text encrypted (also changing the decimal values to hexadecimal)
@@ -102,10 +102,12 @@ void cipher_text_1(string text, int k1, int *k2, int l)
 
     for (int i = 0; text[i] != '\0'; i++)
     {
-        printf("%x %x %x ", (ciphered_text[i]) * 2, k1 - (2 * i), l + i);
+        printf("%x %x %x ", ciphered_text[i], k1, l);
         // Adding the first key and len information to help the decryption program
     }
 
+    free(ciphered_text);
+}
     free(ciphered_text);
 }
 
